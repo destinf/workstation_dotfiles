@@ -1,0 +1,25 @@
+- hosts: localhost
+  connection: local
+  gather_facts: yes
+  tasks:
+    - name: Add Iosevka Font to COPR
+      become: true
+      command:
+        cmd: dnf copr enable -y peterwu/iosevka
+
+    - name: Install Packages
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - neovim
+          - python3-neovim
+          - emacs
+          - iosevka-fixed-ss05-fonts
+        state: present
+
+
+    - name: Symlink emacs
+      ansible.builtin.file:
+        src: ~/dotfiles/config/emacs
+        dest: ~/.emacs.d
+        state: link
