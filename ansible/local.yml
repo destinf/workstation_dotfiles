@@ -4,8 +4,8 @@
   tasks:
     - name: Add Iosevka Font to COPR
       become: true
-      command:
-        cmd: dnf copr enable -y peterwu/iosevka
+      community.general.copr:
+        name: peterwu/iosevka
 
     - name: Install Packages
       become: true
