@@ -15,11 +15,22 @@
           - python3-neovim
           - emacs
           - iosevka-fixed-ss05-fonts
+          - kitty
         state: present
-
 
     - name: Symlink emacs
       ansible.builtin.file:
         src: ~/dotfiles/config/emacs
         dest: ~/.emacs.d
+        state: link
+
+    - name: Create config dir for kittyterm
+      ansible.builtin.file:
+        path: ~/.config/kitty
+        state: directory
+
+    - name: Symlink kittyterm config
+      ansible.builtin.file:
+        src: ~/dotfiles/config/kitty.conf
+        dest: ~/.config/kitty/kitty.conf
         state: link
