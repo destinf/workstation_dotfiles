@@ -8,3 +8,4 @@ This config is inspired by
 * Clean up the config so it doesn't write files everywhere it opens buffers
 * Autocomplete
 * LSP
+* Tests
