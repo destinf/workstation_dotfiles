@@ -12,7 +12,7 @@
 (global-display-line-numbers-mode 1)
 (column-number-mode)
 
-(set-face-attribute 'default nil :font "Iosevka" :height 200)
+(set-face-attribute 'default nil :font "Iosevka Fixed SS05" :height 200)
 
 (load-theme 'wombat t)
 
@@ -94,6 +94,11 @@
 
 (use-package doom-themes)
 
+(defun dz/open-emacs-init ()
+  "Open the emacs init file"
+  (interactive)
+  (find-file user-init-file))
+
 (use-package general
   :config
   (general-create-definer df/leader-keys
@@ -103,7 +108,16 @@
   (df/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "SPC" 'counsel-M-x)
+    "SPC" 'counsel-M-x
+    "w"  'evil-window-map
+    "p"  'projectile-command-map
+    "/"  'counsel-projectile-rg
+    "wd" 'evil-quit
+    "ff" 'counsel-find-file
+    "fs" 'save-buffer
+    "fi" 'dz/open-emacs-init
+    "xe" 'eval-last-sexp
+    "gg" 'magit)
   )
 
 (use-package evil
@@ -137,13 +151,36 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom (projectile-completion-system 'ivy)
+  :bind
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/Projects/codes")
+    (setq projectile-project-search-path '("~/Projects/codes")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
+(use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(hydra evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
+   '(exec-path-from-shell magit counsel-projectile projectile hydra evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
