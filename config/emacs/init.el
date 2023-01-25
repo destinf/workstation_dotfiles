@@ -116,6 +116,7 @@
     "ff" 'counsel-find-file
     "fs" 'save-buffer
     "fi" 'dz/open-emacs-init
+    "fr" 'counsel-recentf
     "xe" 'eval-last-sexp
     "gg" 'magit)
   )
