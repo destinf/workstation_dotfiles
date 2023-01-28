@@ -105,6 +105,7 @@
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
     :global-prefix "C-SPC")
+  (define-key evil-window-map "d" 'evil-quit)
   (df/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
@@ -112,7 +113,6 @@
     "w"  'evil-window-map
     "p"  'projectile-command-map
     "/"  'counsel-projectile-rg
-    "wd" 'evil-quit
     "ff" 'counsel-find-file
     "fs" 'save-buffer
     "fi" 'dz/open-emacs-init
