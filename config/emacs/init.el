@@ -1,9 +1,3 @@
-;;; init.el --- init.el based on system crafters youtube tutorial  -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2022  destin
-
-;; Author: destin <destin@Destin-Fong>
-
 (setq inhibit-startup-message t
       visible-bell nil)
 
@@ -12,7 +6,11 @@
 (global-display-line-numbers-mode 1)
 (column-number-mode)
 
-(set-face-attribute 'default nil :font "Iosevka Fixed SS05" :height 200)
+(setq df/main-font "Iosevka Fixed SS05")
+
+(set-face-attribute 'default nil :font df/main-font :height 200)
+(set-face-attribute 'fixed-pitch nil :font df/main-font :height 195)
+(set-face-attribute 'variable-pitch nil :font "Arial" :height 295 :weight 'regular)
 
 (load-theme 'wombat t)
 
@@ -119,6 +117,7 @@
     "fr" 'counsel-recentf
     "xe" 'eval-last-sexp
     "gg" 'magit)
+    "/"  'counsel-projectile-rg)
   )
 
 (use-package evil
@@ -179,6 +178,46 @@
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown"))
+(defun df/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1))
+
+(use-package org
+  :hook (org-mode . df/org-mode-setup)
+  :config (setq org-hide-emphasis-markers t))
+
+(defun df/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+	visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . df/org-mode-visual-fill))
+
+(dolist (face '((org-level-1 . 1.2)
+		(org-level-2 . 1.1)
+		(org-level-3 . 1.05)
+		(org-level-4 . 1.0)
+		(org-level-5 . 1.1)
+		(org-level-6 . 1.1)
+		(org-level-7 . 1.1)
+		(org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font df/main-font :weight 'regular :height (cdr face)))
+
+;; Ensure that anything that should be fixed-pitch in Org files appears that way
+(set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+(set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+(set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -186,7 +225,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(markdown-mode exec-path-from-shell magit counsel-projectile projectile hydra evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
+   '(visual-fill-column forge exec-path-from-shell magit counsel-projectile projectile hydra evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
