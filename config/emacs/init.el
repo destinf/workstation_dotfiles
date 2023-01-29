@@ -217,3 +217,7 @@
 
 (use-package visual-fill-column
   :hook (org-mode . df/org-mode-visual-fill))
+
+(use-package company
+  :config (add-hook 'after-init-hook 'global-company-mode))
+
