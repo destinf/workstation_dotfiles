@@ -7,6 +7,8 @@
 (column-number-mode)
 
 (setq df/main-font "Iosevka Fixed SS05")
+(setq df/config-directory (file-name-directory user-init-file)
+      custom-file (concat (file-name-directory user-init-file) "custom.el"))
 
 (set-face-attribute 'default nil :font df/main-font :height 200)
 (set-face-attribute 'fixed-pitch nil :font df/main-font :height 195)
