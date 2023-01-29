@@ -221,3 +221,10 @@
 (use-package company
   :config (add-hook 'after-init-hook 'global-company-mode))
 
+;; Tree Sitter
+(use-package tree-sitter-langs)
+(use-package tree-sitter
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+;; https://emacs-tree-sitter.github.io/getting-started/
