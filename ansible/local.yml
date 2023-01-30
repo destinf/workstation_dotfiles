@@ -16,6 +16,7 @@
           - emacs
           - iosevka-fixed-ss05-fonts
           - kitty
+          - nodejs
         state: present
 
     - name: Symlink emacs
@@ -34,3 +35,9 @@
         src: ~/dotfiles/config/kitty.conf
         dest: ~/.config/kitty/kitty.conf
         state: link
+
+    - name: Install tj/n
+      become: true
+      community.general.npm:
+        name: n
+        global: true
