@@ -135,7 +135,8 @@
     "fi" 'dz/open-emacs-init
     "fr" 'counsel-recentf
     "xe" 'eval-last-sexp
-    "gg" 'magit)
+    "gg" 'magit
+    ";" 'pp-eval-expression)
   "/"  'counsel-projectile-rg)
 
 (use-package evil-collection
