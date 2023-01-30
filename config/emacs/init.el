@@ -229,3 +229,19 @@
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 ;; https://emacs-tree-sitter.github.io/getting-started/
+
+;; Typescript Things
+(defun df/setup-tide-mode ()
+  (tide-setup)
+  (flycheck-mode 1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode 1)
+  (tide-hl-identifier-mode 1))
+(use-package tide
+  :config (df/setup-tide-mode))
+(use-package flycheck)
+
+(use-package yaml-mode
+  :config (add-hook 'yaml-mode-hook
+		    (lambda ()
+		      (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
