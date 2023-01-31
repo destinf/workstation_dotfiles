@@ -232,14 +232,21 @@
 
 ;; Typescript Things
 (defun df/setup-tide-mode ()
-  (tide-setup)
+  (typescript-mode . tide-setup)
   (flycheck-mode 1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode 1)
-  (tide-hl-identifier-mode 1))
+  (typescript-mode . tide-hl-identifier-mode))
+
 (use-package tide
-  :config (df/setup-tide-mode))
+  :after (typescript-mode company)
+  :hook (df/setup-tide-mode))
+
 (use-package flycheck)
+(use-package typescript-mode
+  :config
+  ;; Enable typescript-mode for .tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode)))
 
 (use-package yaml-mode
   :config (add-hook 'yaml-mode-hook
