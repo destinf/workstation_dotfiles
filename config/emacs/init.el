@@ -245,3 +245,13 @@
   :config (add-hook 'yaml-mode-hook
 		    (lambda ()
 		      (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+
+(use-package yasnippet
+  :init (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+  :config
+  (yas-global-mode 1)
+  (df/leader-keys
+    "is" 'yas-insert-snippet))
+
+(use-package yasnippet-snippets
+  :after yasnippet)
